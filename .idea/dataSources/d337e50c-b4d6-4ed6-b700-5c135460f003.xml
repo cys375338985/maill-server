@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="mmail@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
     <root id="1"/>
     <schema id="2" parent="1" name="mmail">
       <Current>1</Current>
@@ -58,6 +58,7 @@
       <ColNames>user_id</ColNames>
     </index>
     <key id="23" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -100,6 +101,7 @@
       <DataType>datetime|0</DataType>
     </column>
     <key id="31" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -179,6 +181,7 @@
       <Unique>1</Unique>
     </index>
     <key id="47" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -247,6 +250,7 @@
 order_no</ColNames>
     </index>
     <key id="62" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -292,6 +296,7 @@ order_no</ColNames>
       <DataType>datetime|0</DataType>
     </column>
     <key id="71" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -363,6 +368,7 @@ order_no</ColNames>
       <DataType>datetime|0</DataType>
     </column>
     <key id="84" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -426,6 +432,7 @@ order_no</ColNames>
       <DataType>datetime|0</DataType>
     </column>
     <key id="97" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
@@ -489,6 +496,7 @@ order_no</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="109" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

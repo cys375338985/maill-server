@@ -53,7 +53,7 @@ public class ServerResponse<T> implements Serializable {
     }
 
 
-    public T getDate() {
+    public T getData() {
         return data;
     }
 

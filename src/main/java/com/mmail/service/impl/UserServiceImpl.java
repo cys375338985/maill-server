@@ -55,7 +55,7 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("注册失败");
 
         }
-        return ServerResponse.createByErrorMessage("注册成功");
+        return ServerResponse.createBySuccess("注册成功");
     }
 
     @Override
@@ -65,7 +65,7 @@ public class UserServiceImpl implements IUserService {
 
                 int  resultCount= userMapper.checkUserName(str);
                 if(resultCount> 0 ){
-                    return ServerResponse.createByErrorMessage("用户名已存在");
+                    return ServerResponse.createBySuccess("用户名已存在");
                 }
             }
             if(Const.CHECKVAID_TYPE_EMAIL.equals(type)){
@@ -106,13 +106,13 @@ public class UserServiceImpl implements IUserService {
             TokenCache.setCache("token_"+username,token);
             return  ServerResponse.createBySuccess(token);
         }
-        return ServerResponse.createBySuccessMessage("问题答案错误");
+        return ServerResponse.createByErrorMessage("问题答案错误");
     }
 
     @Override
     public ServerResponse<String> updatePassword(String username, String password, String token) {
-        if(StringUtils.isNotBlank(token)){
-             return ServerResponse.createBySuccessMessage("参数错误，没有token");
+        if(!StringUtils.isNotBlank(token)){
+             return ServerResponse.createByErrorMessage("参数错误，没有token");
         }
 
         ServerResponse validResponse =   checkVaid(username,Const.CHECKVAID_TYPE_USERNAME);
@@ -121,7 +121,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         String tokens = TokenCache.getKey("token_"+username);
-        if(StringUtils.isNotBlank(tokens)){
+        if(!StringUtils.isNotBlank(tokens)){
             return  ServerResponse.createByErrorMessage("服务以过期");
         }
 
@@ -142,10 +142,12 @@ public class UserServiceImpl implements IUserService {
     public ServerResponse<String> restPassword(String password, String passwordNew, User user) {
 
         password = MD5Util.MD5EncodeUtf8(password);
+
         passwordNew = MD5Util.MD5EncodeUtf8(passwordNew);
         int reslt  = userMapper.checkPassword(user.getId(),password);
         if(reslt>0){
             user.setPassword(passwordNew);
+
             reslt =  userMapper.updateByPrimaryKey(user);
             if(reslt >0 ){
                 return ServerResponse.createBySuccessMessage("密码修改成功");

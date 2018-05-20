@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/")
 public class UserController {
     @Autowired
     private IUserService userService;
@@ -25,9 +25,7 @@ public class UserController {
     public ServerResponse<User> login(@RequestParam("username") String name, @RequestParam("password") String pass, HttpSession session){
         ServerResponse<User> response =  userService.login(name,pass);
         if(response.isSuccess()){
-
-            session.setAttribute(Const.CURRENT_USER,response.getDate());
-
+            session.setAttribute(Const.CURRENT_USER,response.getData());
         }
         return response;
 
@@ -69,8 +67,6 @@ public class UserController {
             return ServerResponse.createBySuccess(user);
         }
         return ServerResponse.createByErrorMessage("用户未登录，无法获取用户信息");
-
-
     }
 
 
@@ -98,7 +94,7 @@ public class UserController {
 
     @RequestMapping(value = "rest_password.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> forgetResetPassword(HttpSession session, String password, String passwordNew){
+    public ServerResponse<String> resetPassword(HttpSession session, String password, String passwordNew){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null ){
             return  ServerResponse.createByErrorMessage("用户没有登录");
@@ -114,10 +110,10 @@ public class UserController {
         if(currentuser == null ){
             return  ServerResponse.createByErrorMessage("用户没有登录");
         }
-        user.setId(user.getId());
+        user.setId(currentuser.getId());
         ServerResponse<User> response =  userService.updateInformation(user);
         if(response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER,response.getDate());
+            session.setAttribute(Const.CURRENT_USER,response.getData());
         }
         return response;
     }
