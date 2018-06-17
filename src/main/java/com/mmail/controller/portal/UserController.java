@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private IUserService userService;
 
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(@RequestParam("username") String name, @RequestParam("password") String pass, HttpSession session){
+    public ServerResponse<User> login(@RequestParam("username") String name,
+                                      @RequestParam("password") String pass, HttpSession session){
         ServerResponse<User> response =  userService.login(name,pass);
         if(response.isSuccess()){
             session.setAttribute(Const.CURRENT_USER,response.getData());
