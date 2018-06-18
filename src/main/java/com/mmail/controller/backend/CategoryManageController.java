@@ -1,4 +1,4 @@
-package com.mmail.controller.portal.backend;
+package com.mmail.controller.backend;
 
 import com.mmail.common.Const;
 import com.mmail.common.ResponseCode;
