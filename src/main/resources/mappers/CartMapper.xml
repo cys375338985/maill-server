@@ -116,4 +116,57 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectCatByUserIdProductId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+      <include refid="Base_Column_List"/>
+    From mmall_cart a
+    where
+      a.product_id = #{productId}
+    and
+      a.user_id = #{userid}
+  </select>
+  <select id="selectCartByUserId" resultMap="BaseResultMap" parameterType="int">
+    SELECT 
+    <include refid="Base_Column_List"/>
+    FROM mmall_cart a
+    WHERE
+    a.user_id = ${userid}
+
+  </select>
+  <select id="selectCartProuductChenckedStatusByUserId" resultType="int" parameterType="int">
+    SELECT  COUNT(*)
+    FROM mmall_cart a
+    WHERE
+      a.user_id=${userid}
+    and
+     a.checked = 0;
+  </select>
+  <delete id="deleteByUserIdProductIds" parameterType="map" >
+    DELETE FROM
+        mmall_cart
+    WHERE
+        user_id = #{userid}
+      <if test="productIdList != null">
+        and product_id in
+      <foreach collection="productIdList" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </delete>
+
+  <update id="checkedOrUmcheckedProduct"  parameterType="map">
+      UPDATE
+        mmall_cart
+      set
+        checked=#{checked},
+        update_time = now()
+      where
+          user_id = #{userid}
+          <if test="productId != null">
+            and  product_id = #{productId}
+          </if>
+  </update>
+  <select id="selectCartProuductCount" resultType="int" parameterType="int">
+      SELECT  IFNULL(SUM(a.quantity),0) as count_from FROM  mmall_cart a WHERE a.user_id= #{userid}
+  </select>
 </mapper>
