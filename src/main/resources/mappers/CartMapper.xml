@@ -169,4 +169,14 @@
   <select id="selectCartProuductCount" resultType="int" parameterType="int">
       SELECT  IFNULL(SUM(a.quantity),0) as count_from FROM  mmall_cart a WHERE a.user_id= #{userid}
   </select>
+  <select id="selectCartByCheckdeCart" resultMap="BaseResultMap" parameterType="int">
+      SELECT
+       <include refid="Base_Column_List"/>
+      FROM
+        mmall_cart
+      WHERE
+          user_id = #{userId}
+      and
+        checked = 1
+  </select>
 </mapper>

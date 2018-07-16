@@ -3,6 +3,7 @@ package com.mmail.pojo;
 import java.util.Date;
 
 public class Shipping {
+
     private Integer id;
 
     private Integer userId;
