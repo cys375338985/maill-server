@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class OrderProductVo {
     private List<OrderItemVo> orderItemVoList;
-    private BigDecimal productTotaPrice;
+    private BigDecimal productTotalPrice;
     private String imageHost;
 
 

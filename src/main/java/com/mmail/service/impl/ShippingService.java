@@ -47,11 +47,11 @@ public class ShippingService implements IShippingService {
     @Override
     public ServerResponse update(User user, Shipping shipping) {
         shipping.setUserId(user.getId());
-        int resulCount = shippingMapper.updateByshippingIdAnduserId(shipping);
-        if(resulCount > 0){
+        int resutCount = shippingMapper.updateByshippingIdAnduserId(shipping);
+        if(resutCount > 0){
             return ServerResponse.createBySuccess("更新地址成功");
         }
-        return ServerResponse.createBySuccess("更新地址失败");
+        return ServerResponse.createByErrorMessage("更新地址失败");
     }
 
     @Override

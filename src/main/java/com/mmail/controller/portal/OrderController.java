@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,7 +35,7 @@ public class OrderController {
     @Autowired
     private IOrderService orderService;
 
-    @RequestMapping("create.do")
+    @RequestMapping(value = "create.do")
     @ResponseBody
     public ServerResponse<Object> create(HttpSession session, Integer shippingId){
         User user= (User) session.getAttribute(Const.CURRENT_USER);
@@ -66,7 +67,7 @@ public class OrderController {
         return  orderService.getOrderCartProduct(user.getId());
     }
 
-    @RequestMapping("deteil.do")
+    @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse deteil(HttpSession session,Long orderNo){
         User user= (User) session.getAttribute(Const.CURRENT_USER);
@@ -88,7 +89,7 @@ public class OrderController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode()
                     ,ResponseCode.NEED_LOGIN.getDesc());
         }
-        return  orderService.list(user.getId(),pageNum,pageNum);
+        return  orderService.list(user.getId(),pageNum,pageSize);
     }
 
 

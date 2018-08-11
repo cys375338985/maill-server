@@ -21,14 +21,14 @@ public class OrderVo {
 
         private Integer postage;
         private Integer status;
-        private  String statusDesc;
+        private String statusDesc;
         private String sendTime;
         private String endTime;
         private String closeTime;
         private String createTime;
 
         private List<OrderItemVo> orderItemVoList;
-        private  String imgageHost;
+        private  String imgaeHost;
         private Integer shippingId;
         private  String receiverName;
         private ShippingVo shippingVo;

@@ -151,7 +151,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="checkUserName" resultType="int" parameterType="string">
+  <select id="checkUserName" resultType="java.lang.Integer" parameterType="string">
       SELECT COUNT(*) from mmall_user WHERE  mmall_user.username = #{username}
   </select>
 
@@ -161,15 +161,15 @@
       and  mmall_user.password = #{password}
   </select>
 
-    <select id="checkEmail" resultType="int" parameterType="string">
+    <select id="checkEmail" resultType="java.lang.Integer" parameterType="string">
         SELECT COUNT(*) from mmall_user WHERE  mmall_user.email = #{email}
     </select>
 
-  <select id="selectUserQuestionByUserName" resultType="string" parameterType="string">
+  <select id="selectUserQuestionByUserName" resultType="java.lang.String" parameterType="string">
   SELECT mmall_user.question from mmall_user WHERE  mmall_user.username = #{username}
 </select>
 
-  <select id="checkAnswer" resultType="int" parameterType="map">
+  <select id="checkAnswer" resultType="java.lang.Integer" parameterType="map">
     SELECT COUNT(*) from mmall_user a WHERE  a.username = #{username} and a.question = #{question} and a.answer= #{answer}
   </select>
 
@@ -178,7 +178,7 @@
     UPDATE mmall_user SET  password = #{password},update_time = now()
     where username=#{username}
  </update>
-  <select id="checkPassword" parameterType="map" resultType="int">
+  <select id="checkPassword" parameterType="map" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM mmall_user a WHERE  a.id = #{userid} and  a.password = #{password}
   </select>
 
@@ -188,7 +188,7 @@
 
   </update>
 
-  <select id="checkEmailById" parameterType="map" resultType="int">
+  <select id="checkEmailById" parameterType="map" resultType="java.lang.Integer">
     SELECT  COUNT(*) FROM  mmall_user a WHERE a.id=#{userid} and a.email!=#{email}
 
   </select>

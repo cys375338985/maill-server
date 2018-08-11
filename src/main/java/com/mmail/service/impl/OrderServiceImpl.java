@@ -312,10 +312,10 @@ public class OrderServiceImpl  implements IOrderService{
             orderItemVoList.add(assembelOrderItemVo(orderItem));
 
         }
-        orderProductVo.setProductTotaPrice(payment);
+        orderProductVo.setProductTotalPrice(payment);
         orderProductVo.setOrderItemVoList(orderItemVoList);
         orderProductVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
-        return ServerResponse.createBySuccess(orderItemVoList);
+        return ServerResponse.createBySuccess(orderProductVo);
     }
 
     @Override
@@ -439,7 +439,7 @@ public class OrderServiceImpl  implements IOrderService{
             orderVo.setEndTime(DateTimeUtil.dateTostr(order.getEndTime()));
             orderVo.setCreateTime(DateTimeUtil.dateTostr(order.getCreateTime()));
             orderVo.setCloseTime(DateTimeUtil.dateTostr(order.getCloseTime()));
-            orderVo.setImgageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+            orderVo.setImgaeHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
             List<OrderItemVo> orderItemVoList = Lists.newArrayList();
             for (OrderItem orderItem: orderItemList){
                 orderItemVoList.add(assembelOrderItemVo(orderItem));
@@ -454,6 +454,7 @@ public class OrderServiceImpl  implements IOrderService{
         OrderItemVo orderItemVo = new OrderItemVo();
         orderItemVo.setOrderNo(orderItem.getOrderNo());
         orderItemVo.setProductId(orderItem.getProductId());
+        orderItemVo.setProductImage(orderItem.getProductImage());
         orderItemVo.setProductName(orderItem.getProductName());
         orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
         orderItemVo.setQuantity(orderItem.getQuantity());
@@ -485,9 +486,9 @@ public class OrderServiceImpl  implements IOrderService{
 
     private void reduecProductStrok(List<OrderItem> orderItemList) {
         orderItemList.forEach((item)->{
-            Product product = productMapper.selectByPrimaryKey(item.getId());
+            Product product = productMapper.selectByPrimaryKey(item.getProductId());
             if(product!=null){
-                product.setStatus(product.getStock()-item.getQuantity());
+                product.setStock(product.getStock()-item.getQuantity());
             }
             productMapper.updateByPrimaryKeySelective(product);
         });
@@ -540,6 +541,7 @@ public class OrderServiceImpl  implements IOrderService{
             orderItem.setUserId(userId);
             orderItem.setProductId(product.getId());
             orderItem.setProductImage(product.getMainImage());
+            orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setProductName(product.getName());
             orderItem.setCurrentUnitPrice(product.getPrice());
             orderItem.setTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(),cartItem.getQuantity()));

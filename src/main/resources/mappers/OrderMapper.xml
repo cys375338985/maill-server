@@ -208,7 +208,7 @@
     WHERE
       user_id = #{userId}
      and
-      orderNo = #{orderNo}
+      order_no = #{orderNo}
   </select>
   <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="map">
     SELECT
@@ -216,7 +216,7 @@
     FROM
     mmall_order
     WHERE
-    orderNo = #{orderNo}
+    order_no = #{orderNo}
   </select>
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
     SELECT
@@ -226,7 +226,7 @@
     WHERE
     user_id = #{userId}
     order by
-      create_time decs
+      create_time desc
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap" >
@@ -235,7 +235,7 @@
     FROM
     mmall_order
     order by
-      create_time decs
+      create_time desc
   </select>
 
 </mapper>

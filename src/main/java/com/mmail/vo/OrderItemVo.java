@@ -17,4 +17,6 @@ public class OrderItemVo {
     private Integer quantity;
     private BigDecimal totalPrice;
     private Date createTime;
+    private String productImage;
+
 }

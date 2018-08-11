@@ -133,7 +133,7 @@
     a.user_id = ${userid}
 
   </select>
-  <select id="selectCartProuductChenckedStatusByUserId" resultType="int" parameterType="int">
+  <select id="selectCartProuductChenckedStatusByUserId" resultType="java.lang.Integer" parameterType="int">
     SELECT  COUNT(*)
     FROM mmall_cart a
     WHERE
@@ -166,7 +166,7 @@
             and  product_id = #{productId}
           </if>
   </update>
-  <select id="selectCartProuductCount" resultType="int" parameterType="int">
+  <select id="selectCartProuductCount" resultType="java.lang.Integer" parameterType="int">
       SELECT  IFNULL(SUM(a.quantity),0) as count_from FROM  mmall_cart a WHERE a.user_id= #{userid}
   </select>
   <select id="selectCartByCheckdeCart" resultMap="BaseResultMap" parameterType="int">
