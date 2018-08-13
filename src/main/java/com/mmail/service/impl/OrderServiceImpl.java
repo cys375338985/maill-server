@@ -1,7 +1,6 @@
 package com.mmail.service.impl;
 
 import com.alipay.api.AlipayResponse;
-import com.alipay.api.domain.*;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.demo.trade.config.Configs;
 import com.alipay.demo.trade.model.ExtendParams;
@@ -35,7 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -136,19 +134,19 @@ public class OrderServiceImpl  implements IOrderService{
         }
 
         // 创建扫码支付请求builder，设置请求参数
+        String callbackurl  =   PropertiesUtil.getProperty("alipay.callback.url");
         AlipayTradePrecreateRequestBuilder builder = new AlipayTradePrecreateRequestBuilder()
                 .setSubject(subject).setTotalAmount(totalAmount).setOutTradeNo(outTradeNo)
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                .setNotifyUrl(PropertiesUtil.getProperty("alipay.callback.url"))//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                .setNotifyUrl(callbackurl)//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
       AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
       switch (result.getTradeStatus()) {
           case SUCCESS:
-              log.info("支付宝预下单成功: )");
-
+              log.info("支付宝预下单成功: ");
               AlipayTradePrecreateResponse response = result.getResponse();
               dumpResponse(response);
               File folder = new File(path);
@@ -171,6 +169,7 @@ public class OrderServiceImpl  implements IOrderService{
               log.info("filePath:" + qrPath);
               String qrurl=PropertiesUtil.getProperty("ftp.server.http.prefix")+targetFIle.getName();
               resultMap.put("qrurl",qrurl);
+              resultMap.put("orderNo",order.getOrderNo().toString());
               return ServerResponse.createBySuccess(resultMap);
           case FAILED:
               log.error("支付宝预下单失败!!!");

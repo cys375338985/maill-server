@@ -116,8 +116,13 @@ public class OrderController {
     @RequestMapping("alipay_callback.do")
     @ResponseBody
     public Object alipayCallback(HttpServletRequest request) {
+
         Map<String, String> map = Maps.newHashMap();
         Map<String, String[]> parameterMap = request.getParameterMap();
+
+        if (parameterMap.size()<=0){
+          return   ServerResponse.createByErrorMessage("错误的回调");
+        }
         for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
             String key = entry.getKey();
             String[] values = entry.getValue();
@@ -128,9 +133,9 @@ public class OrderController {
             }
         }
         log.info("支付宝回调,签名:{},交易状态:{},参数"
-                , parameterMap.get("sign"), parameterMap.get("trade_status")
-                , parameterMap.toString());
-        parameterMap.remove("sign_type");
+                , map.get("sign"), map.get("trade_status")
+                , map.toString());
+        map.remove("sign_type");
         boolean alipayRSACheckv2 = false;
         try {
             alipayRSACheckv2 = AlipaySignature.rsaCheckV2(map,
